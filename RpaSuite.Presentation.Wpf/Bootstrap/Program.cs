@@ -31,11 +31,14 @@ public static class Program
 
         var host = builder.Build();
 
-        HangfireConfig.ScheduleRecurringJobs();
-
+        // start host so Hangfire services are available
         using (host)
         {
             host.Start();
+
+            // schedule recurring jobs via DI-managed IRecurringJobManager
+            var recurring = host.Services.GetRequiredService<Hangfire.IRecurringJobManager>();
+            HangfireConfig.ScheduleRecurringJobs(recurring);
 
             var app = new System.Windows.Application();
             var view = new DashboardView

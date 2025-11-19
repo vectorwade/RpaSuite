@@ -17,10 +17,28 @@ public static class InfrastructureDependencies
     {
         services.AddDbContext<ApplicationDbContext>(opt =>
             opt.UseSqlServer(cfg.GetConnectionString("Default")));
+
         services.AddScoped<IProcessoRepository, ProcessoRepository>();
-        // Register automations and orchestrator
-        services.AddScoped<IAutomation, Project.Infrastructure.Automation.Implementations.SampleAutomation>();
+
+        // Register Selenium runner
+        services.AddScoped<RpaSuite.Infrastructure.Automation.Selenium.ISeleniumRunner, RpaSuite.Infrastructure.Automation.Selenium.SeleniumRunner>();
+
+        // Register orchestrator implementation
         services.AddScoped<IAutomationOrchestrator, Project.Infrastructure.Automation.AutomationOrchestrator>();
+
+        // Auto-register all IAutomation implementations found in loaded assemblies
+        var automationInterface = typeof(RpaSuite.Common.Automations.IAutomation);
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        foreach (var asm in assemblies)
+        {
+            Type[] types;
+            try { types = asm.GetTypes(); } catch { continue; }
+            foreach (var t in types.Where(t => automationInterface.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract))
+            {
+                services.AddScoped(typeof(RpaSuite.Common.Automations.IAutomation), t);
+            }
+        }
+
         return services;
     }
 

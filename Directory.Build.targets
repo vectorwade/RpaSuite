@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!-- Set this to true to enable automatic killing of known processes before build. Default: false -->
+    <KillLockingProcesses Condition=" '$(KillLockingProcesses)' == ''">false</KillLockingProcesses>
+  </PropertyGroup>
+
+  <Target Name="KillLockingProcesses" BeforeTargets="BeforeBuild" Condition=" '$(KillLockingProcesses)' == 'true' ">
+    <Message Text="KillLockingProcesses is true — attempting to stop known processes that may lock output files." Importance="high" />
+    <Exec Command="powershell -NoProfile -NonInteractive -Command &quot;foreach($n in 'dotnet','Application','RpaSuite.Presentation.Wpf'){ Get-Process -Name $n -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue } }&quot;" />
+  </Target>
+</Project>

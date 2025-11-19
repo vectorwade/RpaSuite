@@ -1,8 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using RpaSuite.Infrastructure.Automation.Selenium;
 
-namespace Project.Infrastructure.Automation;
+namespace RpaSuite.Infrastructure.Automation.Selenium;
 
 public class SeleniumRunner : ISeleniumRunner
 {

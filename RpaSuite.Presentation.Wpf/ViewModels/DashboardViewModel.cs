@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hangfire;
+using Hangfire.Common;
 using RpaSuite.Application.Interfaces;
 using RpaSuite.Infrastructure.Scheduling.Hangfire;
 using System;
@@ -11,13 +12,15 @@ namespace RpaSuite.Presentation.Wpf.ViewModels;
 public partial class DashboardViewModel : ObservableObject
 {
     private readonly IRpaOrquestrador _orquestrador;
+    private readonly IRecurringJobManager _recurringJobManager;
 
     [ObservableProperty]
     private string status = "Pronto";
 
-    public DashboardViewModel(IRpaOrquestrador orquestrador)
+    public DashboardViewModel(IRpaOrquestrador orquestrador, IRecurringJobManager recurringJobManager)
     {
         _orquestrador = orquestrador;
+        _recurringJobManager = recurringJobManager;
     }
 
     [RelayCommand]
@@ -38,7 +41,8 @@ public partial class DashboardViewModel : ObservableObject
     [RelayCommand]
     private void Agendar()
     {
-        RecurringJob.AddOrUpdate<RpaJob>("rpa-execucao-manual", job => job.ExecutarAsync(), Cron.Minutely);
+        var job = Job.FromExpression<RpaJob>(j => j.ExecutarAsync());
+        _recurringJobManager.AddOrUpdate("rpa-execucao-manual", job, Cron.Minutely(), new RecurringJobOptions());
         Status = "Job agendado para execução a cada minuto.";
     }
 }

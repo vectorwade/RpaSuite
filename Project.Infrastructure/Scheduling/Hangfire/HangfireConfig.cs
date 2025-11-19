@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Hangfire.Common;
 using Hangfire.SqlServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +23,10 @@ public static class HangfireConfig
         return services;
     }
 
-    public static void ScheduleRecurringJobs()
+    public static void ScheduleRecurringJobs(IRecurringJobManager recurringJobManager)
     {
-        RecurringJob.AddOrUpdate<RpaJob>("rpa-execucao", job => job.ExecutarAsync(), Cron.Minutely);
+        // Use service-based API to schedule recurring jobs so JobStorage.Current is not required.
+        var job = Job.FromExpression<RpaJob>(j => j.ExecutarAsync());
+        recurringJobManager.AddOrUpdate("rpa-execucao", job, Cron.Minutely(), new RecurringJobOptions());
     }
 }
