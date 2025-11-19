@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Project.Domain.Entities.Processo>
+<h2>Processos</h2>
+<form method="post" asp-action="Create">
+    <input name="numero" placeholder="Número" />
+    <button type="submit">Adicionar</button>
+</form>
+<ul>
+    @foreach (var p in Model)
+    {
+        <li>@p.Id - @p.Numero - @p.Status</li>
+    }
+</ul>
