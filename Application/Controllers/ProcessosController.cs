@@ -2,6 +2,8 @@
 using Project.Domain.Interfaces;
 using Project.Domain.Entities;
 
+namespace Application.Controllers;
+
 public class ProcessosController : Controller
 {
     private readonly IProcessoRepository _repo;

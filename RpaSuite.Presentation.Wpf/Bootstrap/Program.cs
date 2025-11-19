@@ -37,7 +37,7 @@ public static class Program
         {
             host.Start();
 
-            var app = new Application();
+            var app = new System.Windows.Application();
             var view = new DashboardView
             {
                 DataContext = host.Services.GetRequiredService<DashboardViewModel>()

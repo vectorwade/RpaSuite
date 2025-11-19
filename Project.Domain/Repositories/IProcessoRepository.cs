@@ -1,4 +1,11 @@
-﻿public interface IProcessoRepository
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Project.Domain.Entities;
+
+namespace Project.Domain.Interfaces;
+
+public interface IProcessoRepository
 {
     Task<Processo?> ObterAsync(int id, CancellationToken ct = default);
     Task<List<Processo>> ListarAsync(CancellationToken ct = default);

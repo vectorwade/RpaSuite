@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.Domain.Entities;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+
+namespace Project.Infrastructure.Context;
 
 public class ApplicationDbContext : DbContext
 {

@@ -1,4 +1,8 @@
-﻿public class Processo
+﻿using System;
+
+namespace Project.Domain.Entities;
+
+public class Processo
 {
     public int Id { get; set; }
     public string Numero { get; set; } = "";
@@ -8,3 +12,4 @@
     public void MarcarSincronizado() => Status = "Sincronizado";
     public void MarcarErro() => Status = "Erro";
 }
+

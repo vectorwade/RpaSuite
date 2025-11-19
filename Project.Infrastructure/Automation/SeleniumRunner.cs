@@ -1,13 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using RpaSuite.Infrastructure.Automation.Selenium;
 
-namespace RpaSuite.Infrastructure.Automation.Selenium;
+namespace Project.Infrastructure.Automation;
 
-public interface ISeleniumRunner
+public class SeleniumRunner : ISeleniumRunner
 {
-    void Navigate(string url);
-    object InjectJs(string script, params object[] args);
+    private ChromeOptions CreateOptions()
+    {
+        var options = new ChromeOptions();
+        options.AddArgument("--headless=new");
+        options.AddArgument("--no-sandbox");
+        options.AddArgument("--disable-dev-shm-usage");
+        return options;
+    }
+
+    public void Navigate(string url)
+    {
+        using var driver = new ChromeDriver(CreateOptions());
+        driver.Navigate().GoToUrl(url);
+    }
+
+    public object InjectJs(string script, params object[] args)
+    {
+        using var driver = new ChromeDriver(CreateOptions());
+        if (driver is IJavaScriptExecutor js)
+        {
+            return js.ExecuteScript(script, args);
+        }
+        return null!;
+    }
 }
+

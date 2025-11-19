@@ -1,133 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{87853D3C-2F4F-41ED-8064-D44A638DBF6B}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
     <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RpaSuite.Presentation.Wpf</RootNamespace>
     <AssemblyName>RpaSuite.Presentation.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <EnableSecurityDebugging>true</EnableSecurityDebugging>
-    <Install>False</Install>
-    <StartAction>URL</StartAction>
-    <HostInBrowser>true</HostInBrowser>
-    <BootstrapperEnabled>false</BootstrapperEnabled>
-    <TargetZone>Internet</TargetZone>
-    <GenerateManifests>true</GenerateManifests>
-    <SignManifests>True</SignManifests>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Project.Infrastructure\Project.Infrastructure..csproj" />
+    <ProjectReference Include="..\RpaSuite.Common\RpaSuite.Common.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
-    <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Page Include="Page1.xaml">
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Bootstrap\Program.cs" />
-    <Compile Include="Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\DashboardView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\app.manifest">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="Properties\app.manifest" />
     <None Include="RpaSuite.Presentation.Wpf_TemporaryKey.pfx" />
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj">
-      <Project>{999bdbca-0f28-4734-86a1-fe4b09c0ba0c}</Project>
-      <Name>Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Project.Infrastructure\Project.Infrastructure..csproj">
-      <Project>{77c269b8-ce1f-47ea-a489-82d3124746c1}</Project>
-      <Name>Project.Infrastructure.</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RpaSuite.Common\RpaSuite.Common.csproj">
-      <Project>{4a497edb-fc30-4a46-8be7-6702a7f037d1}</Project>
-      <Name>RpaSuite.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <PropertyGroup>
-    <StartArguments />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>RpaSuite.Presentation.Wpf_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>FAAE7A9F59B5194AA98E308ADD9C1CC570EDD0C4</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

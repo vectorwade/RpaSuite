@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.Domain.Entities;
 using Project.Domain.Interfaces;
+using Project.Infrastructure.Context;
+
+namespace Project.Infrastructure.Repositories;
 
 public class ProcessoRepository : IProcessoRepository
 {

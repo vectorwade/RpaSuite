@@ -1,15 +1,15 @@
-﻿using RpaSuite.Application.Interfaces;
+﻿using RpaSuite.Common.Automations;
 
 namespace RpaSuite.Infrastructure.Scheduling.Hangfire;
 
 public class RpaJob
 {
-    private readonly IRpaOrquestrador _orquestrador;
+    private readonly IAutomationOrchestrator _orchestrator;
 
-    public RpaJob(IRpaOrquestrador orquestrador) => _orquestrador = orquestrador;
+    public RpaJob(IAutomationOrchestrator orchestrator) => _orchestrator = orchestrator;
 
     public async Task ExecutarAsync()
     {
-        await _orquestrador.ExecutarAsync();
+        await _orchestrator.RunAllAsync();
     }
 }
